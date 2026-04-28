@@ -1,121 +1,103 @@
-# AI Asistan Kampusu
+# AI Asistan - Metin İşleme Uygulaması
 
-<div align="center">
+Bu proje, Ollama API üzerinden çalışan bir yapay zeka destekli metin işleme uygulamasıdır. Kullanıcı seçtiği bir metni F8 kısayolu ile yapay zekaya gönderebilir ve farklı işlemler uygulayabilir.
 
-### Sekilli Sukullu Ogrenci Baslangic Rehberi
+## Yapılan Geliştirmeler
 
-`Local AI + Cloud AI = Daha hizli ogrenme`
+Bu projede mevcut yapı bozulmadan yeni eğitim odaklı özellikler eklenmiştir.
 
-[![Ollama](https://img.shields.io/badge/Ollama-Local%20LLM-111827?style=for-the-badge)](https://docs.ollama.com/quickstart)
-[![Gemini 3 Preview](https://img.shields.io/badge/Gemini%203-Preview-0f766e?style=for-the-badge)](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/get-started-with-gemini-3)
-[![Google Cloud](https://img.shields.io/badge/Google%20Cloud-Vertex%20AI-1a73e8?style=for-the-badge)](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/quickstart)
+Eklenen yeni özellikler:
 
-</div>
+- Kısa Anlat
+- Örnekle Anlat
+- Mini Quiz Oluştur
+- Soru Üret
+- Basitleştir
 
-```text
- ____  ____     _   _ _____ _   _ _  __      _    ____ ___ _
-|  _ \|  _ \   | | | |  ___| | | | |/ /     / \  / ___|_ _| |
-| | | | |_) |  | | | | |_  | | | | ' /     / _ \ \___ \| || |
-| |_| |  _ <   | |_| |  _| | |_| | . \    / ___ \ ___) | || |___
-|____/|_| \_\   \___/|_|    \___/|_|\_\  /_/   \_\____/___|_____|
-K   K  L      U   U  BBBB   EEEEE         H   H   OOO    SSSS          GGG   EEEEE  L      DDDD   IIIII  N   N           !
-K  K   L      U   U  B   B  E             H   H  O   O  S             G      E      L      D   D    I    NN  N           !
-KKK    L      U   U  BBBB   EEE           HHHHH  O   O   SSS          G  GG  EEE    L      D   D    I    N N N           !
-K  K   L      U   U  B   B  E             H   H  O   O      S         G   G  E      L      D   D    I    N  NN
-K   K  LLLLL   UUU   BBBB   EEEEE         H   H   OOO   SSSS           GGG   EEEEE  LLLLL  DDDD   IIIII  N   N           !
+Ayrıca bu uzun eğitim çıktılarının seçili metnin üzerine yazılması yerine yeni bir `.txt` dosyasında açılması sağlanmıştır.
+
+## Eklenen Özelliklerin Açıklaması
+
+### Kısa Anlat
+Seçilen konuyu kısa, sade ve öğrenci seviyesinde açıklar.
+
+### Örnekle Anlat
+Seçilen konuyu örneklerle daha detaylı açıklar.
+
+### Mini Quiz Oluştur
+Seçilen konu hakkında 5 soruluk mini quiz oluşturur ve cevap anahtarını verir.
+
+### Soru Üret
+Seçilen metinden kolay, orta veya zor seviyede sorular üretir.
+
+### Basitleştir
+Seçilen metni daha anlaşılır ve öğrenci seviyesine uygun şekilde sadeleştirir.
+
+## TXT Dosyasında Açma Özelliği
+
+Eğitim odaklı uzun cevaplar artık doğrudan seçili metnin yerine yazılmaz. Bunun yerine:
+
+1. `ai_sonuclar` adlı klasör oluşturulur.
+2. Yapay zeka cevabı `.txt` dosyasına kaydedilir.
+3. Oluşturulan dosya otomatik olarak açılır.
+
+Bu sayede kullanıcı orijinal metni kaybetmeden AI çıktısını ayrı bir dosyada saklayabilir.
+
+## Kullanım
+
+1. Ollama çalışır durumda olmalıdır.
+2. Proje klasöründe `BASLAT.bat` dosyası çalıştırılır.
+3. İşlem yapılacak metin seçilir.
+4. F8 tuşuna basılır.
+5. Açılan menüden istenen işlem seçilir.
+
+## Kullanılan Teknolojiler
+
+- Python
+- Ollama API
+- Tkinter
+- PyAutoGUI
+- Pyperclip
+- Pynput
+
+## Akış Şeması
+
+```mermaid
+flowchart TD
+
+A[Program Başlatılır] --> B[Ollama Bağlantısı Kontrol Edilir]
+
+B --> C[Kullanıcı Metin Seçer]
+
+C --> D[F8 Tuşuna Basar]
+
+D --> E[İşlem Menüsü Açılır]
+
+E --> F{İşlem Türü Seçilir}
+
+F --> G[Kısa Anlat]
+F --> H[Örnekle Anlat]
+F --> I[Mini Quiz]
+F --> J[Soru Üret]
+F --> K[Basitleştir]
+
+G --> L[Prompt Oluştur]
+H --> L
+I --> L
+J --> L
+K --> L
+
+L --> M[Ollama API]
+
+M --> N[AI Sonucu Alınır]
+
+N --> O[TXT Dosyasına Kaydedilir]
+
+O --> P[TXT Dosyası Açılır]
 ```
 
-> [!IMPORTANT]
-> Gemini 3 preview "indirilen bir program" degil, Google Cloud Vertex AI uzerinden API ile kullanilan bir model ailesidir.
+## Örnek Çalışma
 
-## 0) Ogrenci Icin Tek Adim
+Aşağıda uygulamanın çalışma örneği gösterilmektedir:
 
-1. Ollama'yi bir kez kur: https://docs.ollama.com/windows models kısmına gir https://ollama.com/library  ve gemini 3 preview cloud modelinini çalıştır yetki giriş gerekecek. ollama artık lokalinde bir LLM olarak sana hizmet vermeye hazır .
-
-2. Bu klasorde sadece `BASLAT.bat` calistir.
-3. Hepsi bu kadar.
-
-> [!IMPORTANT]
-> Ogrenci tarafinda ekstra komut gerekmez. `BASLAT.bat` gerekli durumda `kurulum.bat` dosyasini otomatik cagirir ve ortami kendi kurar.
-
-## 1) BASLAT Calisinca Ne Oluyor?
-
-1. `BASLAT.bat` önce `.venv` var mi kontrol eder.
-2. Yoksa `kurulum.bat` otomatik calisir; Python 3 kontrolu, `.venv` olusturma, `pip` guncelleme ve `requirements.txt` paket kurulumu yapilir.
-3. Sonra `main.pyw` arka planda acilir.
-4. Uygulama varsayilan olarak `gemma3:1b` modeliyle Ollama'ya istek atar.
-
-Ollama API varsayilan adresi: `http://localhost:11434`
-
-## 2) Google Cloud Gemini 3 Preview (Vertex AI)
-
-### Once gerekli olanlar
-- Google Cloud projesi
-- Billing acik olmali
-- Vertex AI API aktif olmali
-- `gcloud` CLI kurulu olmali
-
-### gcloud giris ve kimlik
-
-```powershell
-gcloud init
-gcloud auth application-default login
-```
-
-### Proje ve API ayari
-
-```powershell
-gcloud config set project YOUR_PROJECT_ID
-gcloud services enable aiplatform.googleapis.com
-```
-
-### Python SDK kurulumu
-
-```powershell
-pip install --upgrade google-genai
-```
-
-### Ortam degiskenleri (PowerShell)
-
-```powershell
-$env:GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_ID"
-$env:GOOGLE_CLOUD_LOCATION="global"
-$env:GOOGLE_GENAI_USE_VERTEXAI="True"
-```
-
-### Ilk Gemini 3 Preview istegi
-
-```python
-from google import genai
-
-client = genai.Client()
-
-response = client.models.generate_content(
-    model="gemini-3-flash-preview",
-    contents="Merhaba! Bana 3 maddede Python'da for dongusunu anlat.",
-)
-
-print(response.text)
-```
-
-
-## 3) Mini Ogrenci Challenge (Opsiyonel)
-1. Terminalde su komutu yaz: `ollama run gemini-3-flash-preview`
-2. Sonra Ollama'da gecerli bir modelle sor: `ollama run gemma3:1b`
-3. Ayni soruyu Gemini 3 preview ile sor.
-4. Cevaplari hiz, detay ve dogruluk acisindan karsilastir.
-
-## 4) Hata Cozme Kisa Notlari
-- `403` alirsan: Billing, Vertex AI API ve IAM rol (`roles/aiplatform.user`) kontrol et.
-- `401` alirsan: `gcloud auth application-default login` komutunu yeniden calistir.
-- `ollama model not found` alirsan once su komutu calistir: `ollama run gemma3:1b`
-- `Model not found` alirsan: model ID'yi kontrol et (`gemini-3-flash-preview`, `gemini-3-pro-preview`, `gemini-3.1-pro-preview`).
-
-## Kaynaklar (Resmi)
-- Ollama Quickstart: https://docs.ollama.com/quickstart
-- Ollama Windows: https://docs.ollama.com/windows
-- Ollama Linux: https://docs.ollama.com/linux
-- Vertex AI Quickstart: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/quickstart
-- Gemini 3 Baslangic: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/get-started-with-gemini-3
-- Gemini 3 Pro Model: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro
-- Gemini 3 Flash Model: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-flash
+![Örnek Çalışma](ornek_calisma.png)<img width="1919" height="1138" alt="ornek_calisma" src="https://github.com/user-attachments/assets/344300a0-999e-44d8-bf7d-32afbfed882a" />
