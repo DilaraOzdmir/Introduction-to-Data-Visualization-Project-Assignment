@@ -1,3 +1,12 @@
+## Örnek Çalışma
+
+Aşağıda uygulamanın çalışma örneği gösterilmektedir:
+
+![Örnek Çalışma](ornek_calisma.png)<img width="1919" height="1138" alt="ornek_calisma" src="https://github.com/user-attachments/assets/344300a0-999e-44d8-bf7d-32afbfed882a" />
+
+
+
+
 ## Öğrenci Bilgileri
 
 Ad Soyad: Dilara Özdemir  
@@ -103,8 +112,4 @@ N --> O[TXT Dosyasına Kaydedilir]
 O --> P[TXT Dosyası Açılır]
 ```
 
-## Örnek Çalışma
 
-Aşağıda uygulamanın çalışma örneği gösterilmektedir:
-
-![Örnek Çalışma](ornek_calisma.png)<img width="1919" height="1138" alt="ornek_calisma" src="https://github.com/user-attachments/assets/344300a0-999e-44d8-bf7d-32afbfed882a" />
