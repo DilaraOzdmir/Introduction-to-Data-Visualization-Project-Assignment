@@ -1,3 +1,10 @@
+## Öğrenci Bilgileri
+
+Ad Soyad: Dilara Özdemir  
+Okul Numarası: 230205074  
+Ders: Veri Görselleştirmeye Giriş
+
+
 # AI Asistan - Metin İşleme Uygulaması
 
 Bu proje, Ollama API üzerinden çalışan bir yapay zeka destekli metin işleme uygulamasıdır. Kullanıcı seçtiği bir metni F8 kısayolu ile yapay zekaya gönderebilir ve farklı işlemler uygulayabilir.
