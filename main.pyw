@@ -7,6 +7,8 @@ import time
 import threading
 import requests
 import queue
+import os
+from datetime import datetime
 
 
 # --- AYARLAR ---
@@ -27,7 +29,15 @@ kisayol_basildi = False
 
 
 # --- MENÜ SEÇENEKLERİ VE PROMPT'LAR ---
-ISLEMLER = {
+ISLEMLER = { "🧑‍🏫 Basitleştir ": "Bu metni ilkokul seviyesindeki bir öğrencinin anlayacağı şekilde çok basit, kısa cümlelerle açıkla.",
+    "🧠 Soru Üret (Kolay)": "Bu metni analiz et ve kolay seviyede 5 adet temel soru oluştur. Sorular kısa ve anlaşılır olsun. En altta cevap anahtarını ver.",
+
+"🧠 Soru Üret (Orta)": "Bu metni analiz et ve orta seviyede 5 adet öğretici soru oluştur. Kavramları ölçsün. En altta cevap anahtarını ver.",
+
+"🧠 Soru Üret (Zor)": "Bu metni analiz et ve zor seviyede 5 adet düşünmeye dayalı soru oluştur. Analiz ve yorum gerektirsin. En altta cevap anahtarını ver.",
+"📘 Kisa Anlat": "Aşağıdaki konuyu kısa, basit ve öğrenci seviyesinde anlat",
+    "🧩 Örnekle Anlat": "Aşağıdaki konuyu örneklerle detaylıca anlat",
+    "📝 Mini Quiz Oluştur": "Aşağıdaki konu hakkında 5 soruluk mini quiz oluştur. Cevap anahtarını en altta ver",
     "📝 Gramer Düzelt": "Bu metni Türkçe yazım ve dil bilgisi kurallarına göre düzelt, resmi ve akıcı olsun. Sadece sonucu ver.",
     "🇬🇧 İngilizceye Çevir": "Bu metni İngilizceye çevir. Sadece çeviriyi ver.",
     "🇹🇷 Türkçeye Çevir": "Bu metni Türkçeye çevir. Sadece çeviriyi ver.",
@@ -154,9 +164,39 @@ def secili_metni_kopyala(max_deneme=4):
     return ""
 
 
-def pencere_modunda_gosterilsin_mi(komut_adi):
-    return "PS5 Oyun Skor" in komut_adi
 
+def pencere_modunda_gosterilsin_mi(komut_adi):
+    # Eğer komut adı aşağıdaki listeden birini içeriyorsa, sonucu kopyala-yapıştır yapmak yerine pencerede gösterir.
+    pencerede_acilacaklar = ["PS5", 
+                             "Kisa Anlat",
+                             "Örnekle Anlat", 
+                             "Mini Quiz", 
+                             "Soru Üret (Kolay)", 
+                             "Soru Üret (Orta)",
+                             "Soru Üret (Zor)",
+                             "Basitleştir"]
+    for kelime in pencerede_acilacaklar:
+        if kelime in komut_adi:
+            return True
+    return False
+
+
+
+def sonucu_txt_dosyasinda_ac(komut_adi, sonuc):
+    klasor = "ai_sonuclar"
+    os.makedirs(klasor, exist_ok=True)
+
+    zaman = datetime.now().strftime("%Y%m%d_%H%M%S")
+    guvenli_komut = "".join(c for c in komut_adi if c.isalnum() or c in (" ", "_", "-")).strip()
+    dosya_yolu = os.path.join(klasor, f"{zaman}_{guvenli_komut}.txt")
+
+    with open(dosya_yolu, "w", encoding="utf-8") as f:
+        f.write(f"İşlem: {komut_adi}\n")
+        f.write(f"Tarih: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}\n")
+        f.write("-" * 50 + "\n\n")
+        f.write(sonuc)
+
+    os.startfile(dosya_yolu)
 
 def sonuc_penceresi_goster(baslik, icerik):
     pencere = tk.Toplevel(root)
@@ -240,9 +280,9 @@ def islemi_yap(komut_adi, secili_metin):
         sonuc = sonuc[1:-1]
 
     if pencere_modunda_gosterilsin_mi(komut_adi):
-        gui_queue.put((sonuc_penceresi_goster, (komut_adi, sonuc)))
-        print("âœ… SonuÃ§ ayrÄ± pencerede gÃ¶sterildi.")
-        return
+     sonucu_txt_dosyasinda_ac(komut_adi, sonuc)
+     print("✅ Sonuç txt dosyasında açıldı.")
+     return
 
     time.sleep(0.2)
     pyperclip.copy(sonuc)
